@@ -7,6 +7,7 @@ const playerNameInput = document.querySelector("#playerNameInput");
 const createRoomButton = document.querySelector("#createRoomButton");
 const joinRoomButton = document.querySelector("#joinRoomButton");
 const startRoomButton = document.querySelector("#startRoomButton");
+const leaveRoomButton = document.querySelector("#leaveRoomButton");
 const lobbyMessageEl = document.querySelector("#lobbyMessage");
 const roomInfoEl = document.querySelector("#roomInfo");
 const playersWaitingEl = document.querySelector("#playersWaiting");
@@ -31,6 +32,15 @@ let pollTimer = null;
 function saveSession(nextSession) {
   session = nextSession;
   localStorage.setItem("colorClashSession", JSON.stringify(session));
+}
+
+function clearSession(note = "Session cleared. Create or join a room.") {
+  window.clearInterval(pollTimer);
+  localStorage.removeItem("colorClashSession");
+  session = null;
+  latestState = null;
+  roomCodeInput.value = "";
+  showLobby(note);
 }
 
 async function api(path, options = {}) {
@@ -92,10 +102,7 @@ async function loadState() {
     latestState = await api(`/api/state?room=${session.roomCode}&player=${session.playerId}`);
     render();
   } catch (error) {
-    localStorage.removeItem("colorClashSession");
-    session = null;
-    latestState = null;
-    showLobby(error.message);
+    clearSession(`${error.message} Create a new room or enter the current room code again.`);
   }
 }
 
@@ -253,6 +260,10 @@ function escapeHtml(value) {
 createRoomButton.addEventListener("click", createRoom);
 joinRoomButton.addEventListener("click", joinRoom);
 startRoomButton.addEventListener("click", startRoom);
+leaveRoomButton.addEventListener("click", () => clearSession());
+roomCodeInput.addEventListener("input", () => {
+  roomCodeInput.value = roomCodeInput.value.toUpperCase();
+});
 drawButton.addEventListener("click", () => sendAction("draw"));
 newGameButton.addEventListener("click", () => sendAction("restart"));
 sayClashButton.addEventListener("click", () => sendAction("clash"));
