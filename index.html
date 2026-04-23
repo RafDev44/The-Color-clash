@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Clash</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="lobby" id="lobby">
+        <div>
+          <p class="eyebrow">Color Clash</p>
+          <h1>Start a room. Pass the code.</h1>
+        </div>
+
+        <div class="lobby-controls">
+          <label>
+            <span>Name</span>
+            <input id="playerNameInput" maxlength="16" placeholder="Player name" autocomplete="nickname" />
+          </label>
+          <label>
+            <span>Room code</span>
+            <input id="roomCodeInput" maxlength="4" placeholder="ABCD" autocomplete="off" />
+          </label>
+          <div class="button-row">
+            <button id="createRoomButton" type="button">Create room</button>
+            <button id="joinRoomButton" type="button">Join room</button>
+            <button id="startRoomButton" type="button" hidden>Start game</button>
+          </div>
+          <strong id="roomInfo"></strong>
+          <p id="lobbyMessage">Create a room or join with a code.</p>
+          <div id="playersWaiting" class="waiting-list" aria-label="Players in room"></div>
+        </div>
+      </section>
+
+      <section class="table" id="gameTable" aria-label="Color Clash game table" hidden>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Color Clash</p>
+            <h1>Match colors, numbers, or powers.</h1>
+          </div>
+          <div class="status-panel">
+            <span id="turnBadge">Your turn</span>
+            <strong id="message">Play a matching card or draw.</strong>
+          </div>
+        </header>
+
+        <section class="opponents" id="opponents" aria-label="Opponents"></section>
+
+        <section class="center-zone">
+          <button class="pile draw-pile" id="drawButton" type="button" aria-label="Draw card">
+            <span>Draw</span>
+            <strong id="deckCount">0</strong>
+          </button>
+
+          <div class="discard-wrap">
+            <div class="label">Discard</div>
+            <div id="discardPile" class="card large red">
+              <span class="corner">5</span>
+              <span class="face">5</span>
+              <span class="corner bottom">5</span>
+            </div>
+          </div>
+
+          <div class="rules-strip" aria-label="Round controls">
+            <button id="sayClashButton" type="button">CLASH!</button>
+            <button id="newGameButton" type="button">New game</button>
+          </div>
+        </section>
+
+        <section class="player-area" aria-label="Your hand">
+          <div class="player-meta">
+            <span id="playerName">You</span>
+            <strong id="playerCount">0 cards</strong>
+          </div>
+          <div id="playerHand" class="hand"></div>
+        </section>
+      </section>
+
+      <dialog id="colorDialog">
+        <form method="dialog">
+          <h2>Choose a color</h2>
+          <div class="color-grid">
+            <button class="color-choice red-choice" value="red" type="submit">Red</button>
+            <button class="color-choice blue-choice" value="blue" type="submit">Blue</button>
+            <button class="color-choice green-choice" value="green" type="submit">Green</button>
+            <button class="color-choice yellow-choice" value="yellow" type="submit">Yellow</button>
+          </div>
+        </form>
+      </dialog>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>
