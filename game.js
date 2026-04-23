@@ -75,6 +75,10 @@ async function joinRoom() {
   try {
     const name = cleanName();
     const roomCode = roomCodeInput.value.trim().toUpperCase();
+    if (roomCode.length !== 4) {
+      setLobbyMessage("Enter the 4-letter room code from the host.");
+      return;
+    }
     const data = await api("/api/join", {
       method: "POST",
       body: JSON.stringify({ name, roomCode }),
@@ -102,7 +106,7 @@ async function loadState() {
     latestState = await api(`/api/state?room=${session.roomCode}&player=${session.playerId}`);
     render();
   } catch (error) {
-    clearSession(`${error.message} Create a new room or enter the current room code again.`);
+    clearSession("That saved room is gone. Create a new room, then use that new 4-letter code.");
   }
 }
 
