@@ -109,7 +109,7 @@ button {
 
 .button-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
@@ -138,6 +138,12 @@ button {
 
 #startRoomButton {
   background: #c12b7b;
+}
+
+#leaveRoomButton {
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
 }
 
 #roomInfo {
